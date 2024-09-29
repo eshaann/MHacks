@@ -1,1 +1,1 @@
-web: python sendKeywords.py
+worker: gunicorn sendKeywords:app
