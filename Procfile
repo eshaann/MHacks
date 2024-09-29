@@ -1,1 +1,1 @@
-worker: python sendKeywords.py
+web: python sendKeywords.py
