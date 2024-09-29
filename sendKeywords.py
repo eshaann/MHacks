@@ -1,6 +1,6 @@
 #receive a filename from an api call, and then find the keywords from that pdf 
 #and then upload keyword to the database. 
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import PDFparser
 import firebase_admin
 from firebase_admin import firestore
@@ -42,7 +42,22 @@ def find_keywords():
 def find_pdf():
     email = request.json.get('email') # Access email from JSON request body
     keywords = request.json.get('keywords')
-    
+    query = db.collection('FileKeywords').where('email', '==', email)
+    # Get the results
+    docs = query.get()
+        # List to store all documents' data
+    keyword_set = []
+
+    # Iterate over results and extract all fields
+    for doc in docs:
+        sample = doc.to_dict()["keywords"]
+        keyword_set.append(sample)
+
+    bestMatchIndex = PDFparser.compare_keywords(keywords, keyword_set)
+    bestMatchDoc = docs[int(bestMatchIndex)]
+    result = bestMatchDoc.to_dict()["fileName"]
+    return jsonify(result)
+
     
     
 

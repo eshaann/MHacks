@@ -21,4 +21,18 @@ def gen_keywords(fileName):
     else:
         print("Response does not have a 'text'")
 
+def compare_keywords(queryCriteria, samples):
+    genai.configure(api_key="AIzaSyDSg12nzNOAmE5e4VcMxtEOD-a9KcQ7NyQ")
+    model = genai.GenerativeModel('gemini-1.5-flash')
+    prompt = "Give me back the INDEX of the set of keywords from the sample set that matches the query criteria the most. Don't give me any extra words or insights."
+    elements = "Query Criteria: " + queryCriteria + "\nSamples: " + "".join(samples)
+    response = model.generate_content(prompt + elements)
+    if hasattr(response, 'text'):
+        return response.text 
+    else:
+        print("Response does not have a 'text'")
+
+
+
+
 words = gen_keywords('algolist.pdf')
