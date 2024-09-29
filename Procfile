@@ -1,1 +1,1 @@
-worker: gunicorn sendKeywords:app
+web: gunicorn sendKeywords:app
