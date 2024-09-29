@@ -31,8 +31,3 @@ def compare_keywords(queryCriteria, samples):
         return response.text 
     else:
         print("Response does not have a 'text'")
-
-
-
-
-words = gen_keywords('algolist.pdf')

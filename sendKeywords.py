@@ -58,6 +58,21 @@ def find_pdf():
     result = bestMatchDoc.to_dict()["fileName"]
     return jsonify(result)
 
+@app.route("/findUserRecords/<email>")
+def getUserRecords(email):
+    query = db.collection('Files').where('email', '==', email)
+    docs = query.get()
+
+    fileNames=[]
+
+    for doc in docs:
+        # Assuming each document has a 'fileName' attribute
+        file_data = doc.to_dict()  # Convert the document to a dictionary
+        if 'name' in file_data:
+            fileNames.append(file_data['name'])
+
+    # Return the list of file names in JSON format
+    return jsonify(fileNames)
     
     
 
